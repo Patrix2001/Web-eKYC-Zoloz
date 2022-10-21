@@ -1,6 +1,7 @@
 import Image from 'next/image'
 
 export default function Home() {
+  console.log(process.env.NEXT_PUBLIC_CLIENT_ID)
   return (
     <div className=''>
       <main className=''>
@@ -10,7 +11,7 @@ export default function Home() {
 
         <p className=''>
           Get started by editing{' '}
-          <code className=''>pages/index.js</code>
+          <code className=''>pages/ndex.js</code>
         </p>
 
         <div className=''>
