@@ -1,44 +1,406 @@
-import Image from "next/image";
+import { Fragment, useState } from "react";
+import fetch from "isomorphic-unfetch";
+import { useRouter } from "next/router";
+import { Menu, Transition } from "@headlessui/react";
+import { docTypes } from "../libraries";
+const webFaceCapture =
+  "https://sg-production-cdn.zoloz.com/page/zoloz-face-fe/index.html";
+
+const webRealId =
+  "https://sg-production-cdn.zoloz.com/page/zoloz-realid-fe/index.html";
+
+const webIdRecognition =
+  "https://sg-production-cdn.zoloz.com/page/zoloz-doc-fe/index.html";
 
 export default function Home() {
+  const [imageContent, setImageContent] = useState("");
+  const [secondImageContent, setSecondImageContent] = useState("");
+  const [content, setContent] = useState([]);
+  const [documentType, setDocumentType] = useState("");
+  const [name, setName] = useState("");
+
+  const router = useRouter();
+  const { response } = router.query;
+  console.log("response::", decodeURIComponent(response));
+
+  const generateContent = (data) => {
+    const result = [];
+    for (let propName in data) {
+      if (data.hasOwnProperty(propName)) {
+        // extract information
+        if (propName === "extInfo") {
+          for (let info in data[propName]) {
+            if (data[propName].hasOwnProperty(info)) {
+              // set image
+              if (info === "imageContent") {
+                setImageContent(data[propName][info]);
+                //set content
+              } else if (info === "rect") {
+                continue;
+              } else {
+                result.push([info, data[propName][info]]);
+              }
+            }
+          }
+        } else if (propName === "extFaceInfo") {
+          for (let info in data[propName]) {
+            if (data[propName].hasOwnProperty(info)) {
+              // set image
+              if (info === "faceImg") {
+                setImageContent(data[propName][info]);
+                //set content
+              } else {
+                result.push([info, data[propName][info]]);
+              }
+            }
+          }
+        } else if (propName === "extIdInfo") {
+          for (let info in data[propName]) {
+            if (data[propName].hasOwnProperty(info)) {
+              if (info === "frontPageImg") {
+                setSecondImageContent(data[propName][info]);
+              } else {
+                result.push([info, data[propName][info]]);
+              }
+            }
+          }
+        }
+      }
+    }
+    setContent(result);
+  };
+
+  const generateData = (data) => {
+    const result = [];
+    for (let propName in data) {
+      if (data.hasOwnProperty(propName)) {
+        result.push([propName, data[propName]]);
+      }
+    }
+    return result;
+  };
+
+  const faceCapture = async () => {
+    try {
+      const url = "/api/facecapture/initialize";
+      const options = {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const response = await fetch(url, options);
+      const data = await response.json();
+      const state = data.transactionId;
+      localStorage.setItem("transactionId", state);
+      const clientcfg = data.clientCfg;
+      router.push(
+        `${webFaceCapture}?state=${state}&clientcfg=${encodeURIComponent(
+          clientcfg
+        )}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const faceResult = async () => {
+    try {
+      const state = localStorage.getItem("transactionId");
+      const url = "/api/facecapture/result";
+      const options = {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ state: state }),
+      };
+      const response = await fetch(url, options);
+      const data = await response.json();
+      generateContent(data);
+    } catch (error) {
+      alert("You don't have capture your face");
+      console.log(error);
+    }
+  };
+
+  const idScan = async () => {
+    try {
+      const url = "/api/idrecognition/recognize";
+      const options = {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const response = await fetch(url, options);
+      const data = await response.json();
+      const state = data.transactionId;
+      localStorage.setItem("transactionId", state);
+      const clientcfg = data.clientCfg;
+      router.push(
+        `${webIdRecognition}?state=${state}&clientcfg=${encodeURIComponent(
+          clientcfg
+        )}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const idInit = async () => {
+    try {
+      const url = "/api/idrecognition/initialize";
+      const options = {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ docType: documentType }),
+      };
+      const response = await fetch(url, options);
+      const data = await response.json();
+      const state = data.transactionId;
+      localStorage.setItem("transactionId", state);
+      const clientcfg = data.clientCfg;
+      router.push(
+        `${webIdRecognition}?state=${state}&clientcfg=${encodeURIComponent(
+          clientcfg
+        )}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const idResult = async () => {
+    try {
+      const state = localStorage.getItem("transactionId");
+      const url = "/api/idrecognition/result";
+      const options = {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ state: state }),
+      };
+      const response = await fetch(url, options);
+      const data = await response.json();
+      generateContent(data);
+    } catch (error) {
+      alert("You don't have scan ID");
+      console.log(error);
+    }
+  };
+
+  const realId = async () => {
+    try {
+      const url = "/api/realid/initialize";
+      const options = {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ docType: documentType }),
+      };
+      const response = await fetch(url, options);
+      const data = await response.json();
+      const state = data.transactionId;
+      localStorage.setItem("transactionId", state);
+      const clientcfg = data.clientCfg;
+      router.push(
+        `${webRealId}?state=${state}&clientcfg=${encodeURIComponent(clientcfg)}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const realIdResult = async () => {
+    try {
+      const state = localStorage.getItem("transactionId");
+      const url = "/api/realid/result";
+      const options = {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ state: state }),
+      };
+      const response = await fetch(url, options);
+      const data = await response.json();
+      generateContent(data);
+    } catch (error) {
+      alert("You don't take eKYC Process");
+      console.log(error);
+    }
+  };
   return (
     <>
-    
-      <h1 className="text-red-700 text-lg">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
-
-      <p className="">
-        Get started by editing <code className="">pages/ndex.js</code>
-      </p>
-
-      <div className="">
-        <a href="https://nextjs.org/docs" className="">
-          <h2>Documentation &rarr;</h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a href="https://nextjs.org/learn" className="">
-          <h2>Learn &rarr;</h2>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
-
-        <a
-          href="https://github.com/vercel/next.js/tree/canary/examples"
-          className=""
-        >
-          <h2>Examples &rarr;</h2>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className=""
-        >
-          <h2>Deploy &rarr;</h2>
-          <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-        </a>
+      <div className="pb-6">
+        <Menu>
+          <Menu.Button className="w-full bg-blue-700 rounded-md hover:bg-blue-800 px-4 py-2 text-md font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-90">
+            {name ? name : "Document"}
+          </Menu.Button>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items className="absolute left-5 right-5 h-80 overflow-y-auto origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="px-1 py-1 ">
+                {docTypes.map((arr, idx) => (
+                  <Menu.Item key={idx}>
+                    {({ active }) => (
+                      <button
+                        type="button"
+                        className={`${
+                          active && "bg-blue-200"
+                        } group w-full flex items-center rounded-md py-2 text-sm pl-4`}
+                        onClick={() => {
+                          setName(arr.document);
+                          setDocumentType(arr.docType);
+                        }}
+                      >
+                        {`${arr.document} (${arr.country})`}
+                      </button>
+                    )}
+                  </Menu.Item>
+                ))}
+              </div>
+            </Menu.Items>
+          </Transition>
+        </Menu>
       </div>
-      </>
+      {/* Face Capture */}
+      <section>
+        <h1 className="text-3xl text-center pb-8">Face Capture</h1>
+        <div className="flex flex-wrap gap-6 mb-6">
+          <button
+            className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
+            onClick={faceCapture}
+          >
+            Face Capture
+          </button>
+          <button
+            className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
+            onClick={faceResult}
+          >
+            Check Face Capture
+          </button>
+        </div>
+      </section>
+      {/* Face Capture */}
+      {/* ID Recognition */}
+      <section>
+        <h1 className="text-3xl text-center pb-8">ID Recognition</h1>
+        <div className="flex flex-wrap gap-6 mb-6">
+          <button
+            className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
+            onClick={() =>
+              documentType ? idInit() : alert("Fill the Document Type")
+            }
+          >
+            ID Recognition
+          </button>
+          <button
+            className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
+            onClick={() =>
+              alert("Coming Soon!")
+            }
+          >
+            Submit Document
+          </button>
+          <button
+            className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
+            onClick={idResult}
+          >
+            Check ID
+          </button>
+        </div>
+      </section>
+      {/* ID Recognition */}
+      {/* Real ID */}
+      <section>
+        <h1 className="text-3xl text-center pb-8">Real ID</h1>
+        <div className="flex flex-wrap gap-6 mb-6">
+          <button
+            className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
+            onClick={() =>
+              documentType ? realId() : alert("Fill the Document Type")
+            }
+          >
+            Real ID
+          </button>
+          <button
+            className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
+            onClick={realIdResult}
+          >
+            Check Real ID
+          </button>
+        </div>
+      </section>
+      {/* Real ID */}
+      <article className="font-semibold">
+        <h1 className="text-3xl text-center pb-4">Result</h1>
+        <div className="pb-6 flex gap-6">
+          {imageContent ? (
+            <img
+              src={`data:image/png;base64,${imageContent}`}
+              className="mx-auto"
+            />
+          ) : (
+            <div className="h-80 w-96 bg-gray-300 m-auto flex items-center justify-center">
+              Your Photo
+            </div>
+          )}
+          {secondImageContent ? (
+            <img
+              src={`data:image/png;base64,${secondImageContent}`}
+              className="mx-auto"
+            />
+          ) : (
+            <div className="h-80 w-96 bg-gray-300 m-auto flex items-center justify-center">
+              Second Photo
+            </div>
+          )}
+        </div>
+        {content.length != 0
+          ? content.map((arr, idx) => (
+              <div className="" key={idx}>
+                <p>
+                  {arr[0].toString()} :{" "}
+                  {typeof arr[1] === "object" ? (
+                    <table>
+                      <tbody>
+                        {generateData(arr[1]).map((data, id) => (
+                          <tr className="font-normal" key={id}>
+                            <td className="pr-6">{data[0]}</td>
+                            <td>{data[1]}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    arr[1].toString()
+                  )}
+                </p>
+              </div>
+            ))
+          : ""}
+      </article>
+      <div className="py-40" />
+    </>
   );
 }

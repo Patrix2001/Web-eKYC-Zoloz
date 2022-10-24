@@ -1,4 +1,3 @@
-const WEB_URL = "http://localhost";
 const BASE_URL = "https://sg-sandbox-api.zoloz.com";
 
 const REAL_ID_INIT = "/api/v1/zoloz/realid/initialize";
@@ -7,6 +6,7 @@ const REAL_ID_RESULT = "/api/v1/zoloz/realid/checkresult";
 const FACECAPTURE_INIT = "/api/v1/zoloz/facecapture/initialize";
 const FACECAPTURE_RESULT = "/api/v1/zoloz/facecapture/checkresult";
 
+const ID_RECOGNITION_OCR = "/api/v1/zoloz/idrecognition/recognize";
 const ID_RECOGNITION_INIT = "/api/v1/zoloz/idrecognition/initialize";
 const ID_RECOGNITION_RESULT = "/api/v1/zoloz/idrecognition/checkresult";
 
@@ -92,19 +92,19 @@ const docTypes = [
   {
     country: "Hong Kong",
     document: "Current HKID (Hong Kong Identity Card)",
-    docType: "00852000000"1,
+    docType: "08520000001",
     pages: 1,
   },
   {
     country: "Hong Kong",
     document: "New HKID (Hong Kong Identity Card)",
-    docType: "00852000000"2,
+    docType: "08520000002",
     pages: 1,
   },
   {
     country: "Macau",
     document: "Identity card",
-    docType: "00853000000"1,
+    docType: "08530000001",
     pages: 2,
   },
   {
@@ -147,12 +147,12 @@ const docTypes = [
 ];
 
 export {
-  WEB_URL,
   BASE_URL,
   REAL_ID_INIT,
   REAL_ID_RESULT,
   FACECAPTURE_INIT,
   FACECAPTURE_RESULT,
+  ID_RECOGNITION_OCR,
   ID_RECOGNITION_INIT,
   ID_RECOGNITION_RESULT,
   docTypes,

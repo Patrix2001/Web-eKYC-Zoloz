@@ -6,10 +6,9 @@ import Link from 'next/link'
 
 const navigation = [
     { name: 'home', href: '/' },
-    { name: 'face capture', href: '/feature/face-capture' },
-    { name: 'id recognition', href: '/feature/id-recognition' },
-    { name: 'real id', href: '/feature/realid' },
-    { name: 'connect', href: '/feature/auth' },
+    { name: 'face capture', href: 'https://docs.zoloz.com/zoloz/saas/apireference/facecapture' },
+    { name: 'id recognition', href: 'https://docs.zoloz.com/zoloz/saas/apireference/utcp2w' },
+    { name: 'real id', href: 'https://docs.zoloz.com/zoloz/saas/apireference/realid' },
 ]
 
 function classNames(...classes) {
