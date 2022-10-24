@@ -98,6 +98,8 @@ export default function Home() {
       router.push(
         `${webFaceCapture}?state=${state}&clientcfg=${encodeURIComponent(
           clientcfg
+        )}&langPack=${encodeURIComponent(
+          process.env.WEB_URL + "/facecapture.json"
         )}`
       );
     } catch (error) {
@@ -144,6 +146,8 @@ export default function Home() {
       router.push(
         `${webIdRecognition}?state=${state}&clientcfg=${encodeURIComponent(
           clientcfg
+        )}&langPack=${encodeURIComponent(
+          process.env.WEB_URL + "/idrecognize.json"
         )}`
       );
     } catch (error) {
@@ -170,6 +174,8 @@ export default function Home() {
       router.push(
         `${webIdRecognition}?state=${state}&clientcfg=${encodeURIComponent(
           clientcfg
+        )}&langPack=${encodeURIComponent(
+          process.env.WEB_URL + "/idrecognize.json"
         )}`
       );
     } catch (error) {
@@ -215,7 +221,9 @@ export default function Home() {
       localStorage.setItem("transactionId", state);
       const clientcfg = data.clientCfg;
       router.push(
-        `${webRealId}?state=${state}&clientcfg=${encodeURIComponent(clientcfg)}`
+        `${webRealId}?state=${state}&clientcfg=${encodeURIComponent(
+          clientcfg
+        )}&langPack=${encodeURIComponent(process.env.WEB_URL + "/realid.json")}`
       );
     } catch (error) {
       console.log(error);
@@ -316,9 +324,7 @@ export default function Home() {
           </button>
           <button
             className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
-            onClick={() =>
-              alert("Coming Soon!")
-            }
+            onClick={() => alert("Coming Soon!")}
           >
             Submit Document
           </button>
@@ -362,7 +368,7 @@ export default function Home() {
             />
           ) : (
             <div className="h-80 w-96 bg-gray-300 m-auto flex items-center justify-center">
-              Your Photo
+              First Photo
             </div>
           )}
           {secondImageContent ? (
