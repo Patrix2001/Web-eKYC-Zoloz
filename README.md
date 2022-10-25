@@ -1,34 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Web eKYC Zoloz
 
-## Getting Started
+### Description
+This is demonstration for integration Zoloz on Web Application Node.js. For more details, you can check at [here](https://docs.zoloz.com/zoloz/saas/integration/grv4bb)
 
-First, run the development server:
+### Tools
+* [Node js v16.11.1](https://nodejs.org/)
+* [NPM v8.10.0](https://www.npmjs.com/) (packaged by Node js)
+
+
+### Instructions
+
+* Clone this repo
+
+* Navigate your cloned project on your directory
+
+* Install the package
 
 ```bash
-npm run dev
-# or
-yarn dev
+ npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* Prepare **Client ID**, **ZOLOZ transaction public key** following on [here](https://docs.zoloz.com/zoloz/saas/integration/xxs8fe#Cb1Lh)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+* On root directory, copy the file **.env.example** to **.env** and fill parameters as you had prepare before.
+Note: **WEB_URL** is your domain web.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+* Store the **merchant_private_key.pem** to your root directory.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+* Run the app locally
 
-## Learn More
+```bash
+ npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+**Expected Output**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```console
+ready - started server on 0.0.0.0:80, url: http://localhost:80
+info  - Loaded env from E:\Semester\7\zoloz\WebZoloz\.env.local
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Access *http://localhost* on your web browser
