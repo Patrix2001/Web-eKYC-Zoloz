@@ -379,8 +379,8 @@ export default function Home() {
         <h1 className="text-3xl text-center pb-8 font-bold">Face ID</h1>
         <Dropdown text="Service Level" data={captureLevel} action={(level) => setFace(level)} />
         <div className="flex flex-wrap mb-6">
-          <ButtonAction text="Face Capture" action={() => face ? faceCapture() : alert("Fill the Service Level")} />
-          <ButtonAction text="Check Face Capture" action={faceResult} />
+          <ButtonAction text="Face ID" action={() => face ? faceCapture() : alert("Fill the Service Level")} />
+          <ButtonAction text="Check Result Face ID" action={faceResult} />
         </div>
       </section>
       {/* Face Capture */}
@@ -390,7 +390,7 @@ export default function Home() {
         <Dropdown text="Service Level" data={recognitionLevel} action={(level) => setRecognition(level)} />
         <div className="flex flex-wrap gap-6 mb-6">
           <ButtonAction text="ID Recognition" action={() => documentType ? recognition ? idInit() : alert("Fill the Service Level") : alert("Fill the Document Type")} />
-          <ButtonAction text="Check ID Recognition" action={idResult} />
+          <ButtonAction text="Check Result ID Recognition" action={idResult} />
         </div>
       </section>
       {/* ID Recognition */}
@@ -400,8 +400,8 @@ export default function Home() {
         <Dropdown text="Service Level" data={realIdLevel} action={(level) => setReal(level)} />
         <Dropdown text="Operation" data={operationMode} action={(level) => setOperation(level)} />
         <div className="flex flex-wrap gap-6 mb-6">
-          <ButtonAction text="Real ID" action={() => documentType ? real ? operation ? realId() : alert("Fill the Operation") : alert("Fill the Service Level") : alert("Fill the Document Type")} />
-          <ButtonAction text="Check Real ID" action={realIdResult} />
+          <ButtonAction text="eKYC" action={() => documentType ? real ? operation ? realId() : alert("Fill the Operation") : alert("Fill the Service Level") : alert("Fill the Document Type")} />
+          <ButtonAction text="Check Result eKYC" action={realIdResult} />
         </div>
       </section>
       {/* Real ID */}

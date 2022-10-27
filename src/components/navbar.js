@@ -6,9 +6,9 @@ import Link from 'next/link'
 
 const navigation = [
     { name: 'home', href: '/' },
-    { name: 'face capture', href: 'https://docs.zoloz.com/zoloz/saas/apireference/facecapture' },
-    { name: 'id recognition', href: 'https://docs.zoloz.com/zoloz/saas/apireference/utcp2w' },
-    { name: 'real id', href: 'https://docs.zoloz.com/zoloz/saas/apireference/realid' },
+    { name: 'Face ID', href: 'https://docs.zoloz.com/zoloz/saas/apireference/facecapture' },
+    { name: 'ID recognition', href: 'https://docs.zoloz.com/zoloz/saas/apireference/utcp2w' },
+    { name: 'eKYC', href: 'https://docs.zoloz.com/zoloz/saas/apireference/realid' },
 ]
 
 function classNames(...classes) {
@@ -17,7 +17,7 @@ function classNames(...classes) {
 
 const Navbar = () => {
     const router = useRouter();
-    
+
     return (
         <Disclosure as="nav" className="fixed top-0 left-0 right-0 z-10 bg-gray-800">
             {({ open }) => (
@@ -63,20 +63,23 @@ const Navbar = () => {
                     </div>
 
                     <Disclosure.Panel className="md:hidden">
-                        <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3 capitalize">
+                        <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
                             {navigation.map((item) => (
-                                <Link key={item.name} href={router.pathname.includes(item.name) ? "#" : item.href}>
-                                    <Disclosure.Button
-                                        as="a"
-                                        className={classNames(
-                                            router.pathname.includes(item.name) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                            'block px-3 py-2 rounded-md text-base font-medium cursor-pointer'
-                                        )}
-                                        aria-current={router.pathname.includes(item.name) ? 'page' : undefined}
-                                    >
-                                        {item.name}
-                                    </Disclosure.Button>
-                                </Link>
+                                <Disclosure.Button
+                                    className={classNames(
+                                        router.pathname.includes(item.name) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                        'block px-3 py-2 w-full rounded-md text-base font-medium cursor-pointer capitalize'
+                                    )}
+                                    aria-current={router.pathname.includes(item.name) ? 'page' : undefined}
+                                >
+                                    <Link key={item.name} href={router.pathname.includes(item.name) ? "#" : item.href}>
+                                        <a>
+                                            <div className='w-full'>
+                                                {item.name}
+                                            </div>
+                                        </a>
+                                    </Link>
+                                </Disclosure.Button>
                             ))}
                         </div>
                     </Disclosure.Panel>
