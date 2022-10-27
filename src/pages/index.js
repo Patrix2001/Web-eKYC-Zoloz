@@ -20,7 +20,7 @@ const webIdRecognition =
   "https://sg-production-cdn.zoloz.com/page/zoloz-doc-fe/index.html";
 
 
-const WEB_URL = process.env.WEB_URL;
+const WEB_URL = "";
 
 const ButtonAction = ({ text, action }) => {
   return (
@@ -183,7 +183,7 @@ export default function Home() {
         `${webFaceCapture}?state=${state}&clientcfg=${encodeURIComponent(
           clientcfg
         )}&langPack=${encodeURIComponent(
-          WEB_URL + "/facecapture.json"
+          WEB_URL + "api/config/facecapture"
         )}`
       );
     } catch (error) {
@@ -231,7 +231,7 @@ export default function Home() {
         `${webIdRecognition}?state=${state}&clientcfg=${encodeURIComponent(
           clientcfg
         )}&langPack=${encodeURIComponent(
-          WEB_URL + "/idrecognize.json"
+          WEB_URL + "api/config/idrecognize"
         )}`
       );
     } catch (error) {
@@ -259,7 +259,7 @@ export default function Home() {
         `${webIdRecognition}?state=${state}&clientcfg=${encodeURIComponent(
           clientcfg
         )}&langPack=${encodeURIComponent(
-          WEB_URL + "/idrecognize.json"
+          WEB_URL + "api/config/idrecognize"
         )}`
       );
     } catch (error) {
@@ -307,7 +307,7 @@ export default function Home() {
       router.push(
         `${webRealId}?state=${state}&clientcfg=${encodeURIComponent(
           clientcfg
-        )}&langPack=${encodeURIComponent(WEB_URL + "/realid.json")}`
+        )}&langPack=${encodeURIComponent(WEB_URL + "api/config/realid")}`
       );
     } catch (error) {
       console.log(error);
