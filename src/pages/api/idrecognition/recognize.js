@@ -1,4 +1,4 @@
-import IdRecoginize from "../../../utils/idRecognize";
+import { IdRecoginize } from "../../../utils";
 
 export default async function handler(req, res) {
   const { docType, frontPageImage, backPageImage } = req.body;

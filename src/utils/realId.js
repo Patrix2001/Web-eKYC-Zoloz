@@ -4,7 +4,7 @@ import createHeader from "./createHeader";
 const WEB_URL = process.env.WEB_URL;
 
 const RealId = () => {
-  const init = async (docType) => {
+  const init = async (docType, serviceLevel, operationMode) => {
     try {
       const url = REAL_ID_INIT;
       const id = new Date().getTime();
@@ -19,7 +19,8 @@ const RealId = () => {
           completeCallbackUrl: `${WEB_URL}`,
           interruptCallbackUrl: `${WEB_URL}`,
         },
-        serviceLevel: "REALID0001",
+        serviceLevel: serviceLevel,
+        operationMode: operationMode
       };
 
       const response = await fetch(BASE_URL + url, {

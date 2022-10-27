@@ -1,4 +1,4 @@
-import FaceCapture from "../../../utils/faceCapture";
+import { FaceCapture } from "../../../utils";
 
 export default async function handler(req, res) {
   const { state } = req.body;

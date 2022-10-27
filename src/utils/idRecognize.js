@@ -39,7 +39,7 @@ const IdRecoginize = () => {
       console.log(error);
     }
   };
-  const init = async (docType) => {
+  const init = async (docType, serviceLevel) => {
     try {
       const url = ID_RECOGNITION_INIT;
       const id = new Date().getTime();
@@ -53,7 +53,7 @@ const IdRecoginize = () => {
           completeCallbackUrl: `${WEB_URL}`,
           interruptCallbackUrl: `${WEB_URL}`,
         },
-        serviceLevel: "IDRECOGNITION0002",
+        serviceLevel: serviceLevel,
       };
 
       const response = await fetch(BASE_URL + url, {

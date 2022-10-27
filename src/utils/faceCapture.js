@@ -5,7 +5,7 @@ const WEB_URL = process.env.WEB_URL;
 // https://docs.zoloz.com/zoloz/saas/apireference/facecapture-initialize
 
 const FaceCapture = () => {
-  const init = async () => {
+  const init = async (serviceLevel) => {
     try {
       const url = FACECAPTURE_INIT;
       const id = new Date().getTime();
@@ -18,7 +18,7 @@ const FaceCapture = () => {
           completeCallbackUrl: `${WEB_URL}`,
           interruptCallbackUrl: `${WEB_URL}`,
         },
-        serviceLevel: "FACECAPTURE0002",
+        serviceLevel: serviceLevel,
       };
 
       const response = await fetch(BASE_URL + url, {

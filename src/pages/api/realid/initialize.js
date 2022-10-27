@@ -1,7 +1,7 @@
-import RealId from "../../../utils/realId";
+import { RealId } from "../../../utils";
 
 export default async function handler(req, res) {
-  const { docType } = req.body;
-  const data = await RealId().init(docType);
+  const { docType, serviceLevel, operationMode } = req.body;
+  const data = await RealId().init(docType, serviceLevel, operationMode);
   return res.status(200).json(data);
 }

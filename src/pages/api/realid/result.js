@@ -1,4 +1,4 @@
-import RealId from "../../../utils/realId";
+import { RealId } from "../../../utils";
 
 export default async function handler(req, res) {
   const { state } = req.body;
