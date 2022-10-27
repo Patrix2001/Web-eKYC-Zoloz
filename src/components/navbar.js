@@ -66,13 +66,14 @@ const Navbar = () => {
                         <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
                             {navigation.map((item) => (
                                 <Disclosure.Button
+                                    key={item.name}
                                     className={classNames(
                                         router.pathname.includes(item.name) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                         'block px-3 py-2 w-full rounded-md text-base font-medium cursor-pointer capitalize'
                                     )}
                                     aria-current={router.pathname.includes(item.name) ? 'page' : undefined}
                                 >
-                                    <Link key={item.name} href={router.pathname.includes(item.name) ? "#" : item.href}>
+                                    <Link href={router.pathname.includes(item.name) ? "#" : item.href}>
                                         <a>
                                             <div className='w-full'>
                                                 {item.name}
