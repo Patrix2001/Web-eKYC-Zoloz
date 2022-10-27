@@ -183,7 +183,7 @@ export default function Home() {
         `${webFaceCapture}?state=${state}&clientcfg=${encodeURIComponent(
           clientcfg
         )}&langPack=${encodeURIComponent(
-          WEB_URL + "api/config/facecapture"
+          WEB_URL + "/api/config/facecapture"
         )}`
       );
     } catch (error) {
@@ -231,7 +231,7 @@ export default function Home() {
         `${webIdRecognition}?state=${state}&clientcfg=${encodeURIComponent(
           clientcfg
         )}&langPack=${encodeURIComponent(
-          WEB_URL + "api/config/idrecognize"
+          WEB_URL + "/api/config/idrecognize"
         )}`
       );
     } catch (error) {
@@ -259,7 +259,7 @@ export default function Home() {
         `${webIdRecognition}?state=${state}&clientcfg=${encodeURIComponent(
           clientcfg
         )}&langPack=${encodeURIComponent(
-          WEB_URL + "api/config/idrecognize"
+          WEB_URL + "/api/config/idrecognize"
         )}`
       );
     } catch (error) {
@@ -307,7 +307,7 @@ export default function Home() {
       router.push(
         `${webRealId}?state=${state}&clientcfg=${encodeURIComponent(
           clientcfg
-        )}&langPack=${encodeURIComponent(WEB_URL + "api/config/realid")}`
+        )}&langPack=${encodeURIComponent(WEB_URL + "/api/config/realid")}`
       );
     } catch (error) {
       console.log(error);
