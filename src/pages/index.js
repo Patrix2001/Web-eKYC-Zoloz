@@ -376,7 +376,7 @@ export default function Home() {
       </div>
       {/* Face Capture */}
       <section>
-        <h1 className="text-3xl text-center pb-8 font-bold">Face Capture</h1>
+        <h1 className="text-3xl text-center pb-8 font-bold">Face ID</h1>
         <Dropdown text="Service Level" data={captureLevel} action={(level) => setFace(level)} />
         <div className="flex flex-wrap mb-6">
           <ButtonAction text="Face Capture" action={() => face ? faceCapture() : alert("Fill the Service Level")} />
@@ -396,7 +396,7 @@ export default function Home() {
       {/* ID Recognition */}
       {/* Real ID */}
       <section>
-        <h1 className="text-3xl text-center pb-8 font-bold">Real ID</h1>
+        <h1 className="text-3xl text-center pb-8 font-bold">eKYC</h1>
         <Dropdown text="Service Level" data={realIdLevel} action={(level) => setReal(level)} />
         <Dropdown text="Operation" data={operationMode} action={(level) => setOperation(level)} />
         <div className="flex flex-wrap gap-6 mb-6">
