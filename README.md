@@ -25,6 +25,8 @@ This is demonstration for integration Zoloz on Web Application Node.js. For more
 * On root directory, copy the file **.env.example** to **.env** and fill parameters as you had prepare before.
 Note: **WEB_URL** is your domain web.
 
+* Edit variable **WEB_URL** on file index.js in the src directory.
+
 * Store the **merchant_private_key.pem** to your root directory.
 
 * Run the app locally

@@ -22,7 +22,7 @@ const webIdRecognition =
   "https://sg-production-cdn.zoloz.com/page/zoloz-doc-fe/index.html";
 
 
-const WEB_URL = "";
+const WEB_URL = "<name-domain>";
 
 export default function Home() {
   const [imageContent, setImageContent] = useState("");
