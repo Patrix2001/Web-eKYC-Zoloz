@@ -1,27 +1,33 @@
-import { BASE_URL, REAL_ID_INIT, REAL_ID_RESULT } from "../libraries";
+import {
+  BASE_URL,
+  REAL_ID_INIT,
+  REAL_ID_RESULT,
+  h5ModeConfig,
+} from "../libraries";
 import createHeader from "./createHeader";
 
-const WEB_URL = process.env.WEB_URL;
-
 const RealId = () => {
-  const init = async (docType, serviceLevel, operationMode) => {
+  const init = async (metaInfo, docType, serviceLevel, operationMode) => {
     try {
       const url = REAL_ID_INIT;
       const id = new Date().getTime();
 
       const content = {
         bizId: `bizid_${id}`,
-        metaInfo: "MOB_H5",
-        flowType: "H5_REALIDLITE_KYC",
+        metaInfo: metaInfo,
         userId: `userid_${id}`,
         docType: docType,
-        h5ModeConfig: {
-          completeCallbackUrl: `${WEB_URL}`,
-          interruptCallbackUrl: `${WEB_URL}`,
-        },
         serviceLevel: serviceLevel,
-        operationMode: operationMode
+        operationMode: operationMode,
       };
+
+      if (metaInfo === "MOB_H5") {
+        //must add configuration mode H5
+        content["h5ModeConfig"] = h5ModeConfig;
+        content["flowType"] = "H5_REALIDLITE_KYC";
+      } else {
+        content["flowType"] = "REALIDLITE_KYC";
+      }
 
       const response = await fetch(BASE_URL + url, {
         method: "POST",

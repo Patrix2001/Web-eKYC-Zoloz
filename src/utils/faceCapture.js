@@ -1,25 +1,25 @@
-import { BASE_URL, FACECAPTURE_INIT, FACECAPTURE_RESULT } from "../libraries";
+import { BASE_URL, FACECAPTURE_INIT, FACECAPTURE_RESULT, h5ModeConfig } from "../libraries";
 import createHeader from "./createHeader";
 
-const WEB_URL = process.env.WEB_URL;
 // https://docs.zoloz.com/zoloz/saas/apireference/facecapture-initialize
 
 const FaceCapture = () => {
-  const init = async (serviceLevel) => {
+  const init = async (metaInfo, serviceLevel) => {
     try {
       const url = FACECAPTURE_INIT;
       const id = new Date().getTime();
 
       const content = {
         bizId: `bizid_${id}`,
-        metaInfo: "MOB_H5",
+        metaInfo: metaInfo,
         userId: `userid_${id}`,
-        h5ModeConfig: {
-          completeCallbackUrl: `${WEB_URL}`,
-          interruptCallbackUrl: `${WEB_URL}`,
-        },
         serviceLevel: serviceLevel,
       };
+
+      if (metaInfo === "MOB_H5") {
+        //must add configuration mode H5
+        content["h5ModeConfig"] = h5ModeConfig;
+      }
 
       const response = await fetch(BASE_URL + url, {
         method: "POST",

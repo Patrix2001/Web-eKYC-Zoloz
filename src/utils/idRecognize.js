@@ -3,10 +3,10 @@ import {
   ID_RECOGNITION_OCR,
   ID_RECOGNITION_INIT,
   ID_RECOGNITION_RESULT,
+  h5ModeConfig
 } from "../libraries";
 import createHeader from "./createHeader";
 
-const WEB_URL = process.env.WEB_URL;
 
 const IdRecoginize = () => {
   const scan = async (docType, frontPageImage, backPageImage) => {
@@ -39,22 +39,23 @@ const IdRecoginize = () => {
       console.log(error);
     }
   };
-  const init = async (docType, serviceLevel) => {
+  const init = async (metaInfo, docType, serviceLevel) => {
     try {
       const url = ID_RECOGNITION_INIT;
       const id = new Date().getTime();
 
       const content = {
         bizId: `bizid_${id}`,
-        metaInfo: "MOB_H5",
+        metaInfo: metaInfo,
         userId: `userid_${id}`,
         docType: docType,
-        h5ModeConfig: {
-          completeCallbackUrl: `${WEB_URL}`,
-          interruptCallbackUrl: `${WEB_URL}`,
-        },
         serviceLevel: serviceLevel,
       };
+
+      if (metaInfo === "MOB_H5") {
+        //must add configuration mode H5
+        content["h5ModeConfig"] = h5ModeConfig;
+      }
 
       const response = await fetch(BASE_URL + url, {
         method: "POST",

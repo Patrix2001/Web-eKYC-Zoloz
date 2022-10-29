@@ -7,7 +7,7 @@ import {
   docTypes,
   recognitionLevel,
   realIdLevel,
-  operationMode
+  operationMode,
 } from "../libraries";
 import ButtonAction from "../components/ButtonAction";
 import Dropdown from "../components/Dropdown";
@@ -20,7 +20,6 @@ const webRealId =
 
 const webIdRecognition =
   "https://sg-production-cdn.zoloz.com/page/zoloz-doc-fe/index.html";
-
 
 const WEB_URL = "<name-domain>";
 
@@ -107,7 +106,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ serviceLevel: face }),
+        body: JSON.stringify({ metaInfo: "MOB_H5", serviceLevel: face }),
       };
       const response = await fetch(url, options);
       const data = await response.json();
@@ -117,9 +116,7 @@ export default function Home() {
       router.push(
         `${webFaceCapture}?state=${state}&clientcfg=${encodeURIComponent(
           clientcfg
-        )}&langPack=${encodeURIComponent(
-          WEB_URL + "/api/config/facecapture"
-        )}`
+        )}&langPack=${encodeURIComponent(WEB_URL + "/api/config/facecapture")}`
       );
     } catch (error) {
       console.log(error);
@@ -156,7 +153,11 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ docType: documentType, serviceLevel: recognition }),
+        body: JSON.stringify({
+          metaInfo: "MOB_H5",
+          docType: documentType,
+          serviceLevel: recognition,
+        }),
       };
       const response = await fetch(url, options);
       const data = await response.json();
@@ -166,9 +167,7 @@ export default function Home() {
       router.push(
         `${webIdRecognition}?state=${state}&clientcfg=${encodeURIComponent(
           clientcfg
-        )}&langPack=${encodeURIComponent(
-          WEB_URL + "/api/config/idrecognize"
-        )}`
+        )}&langPack=${encodeURIComponent(WEB_URL + "/api/config/idrecognize")}`
       );
     } catch (error) {
       console.log(error);
@@ -205,7 +204,12 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ docType: documentType, serviceLevel : real, operationMode : operation }),
+        body: JSON.stringify({
+          metaInfo: "MOB_H5",
+          docType: documentType,
+          serviceLevel: real,
+          operationMode: operation,
+        }),
       };
       const response = await fetch(url, options);
       const data = await response.json();
@@ -265,8 +269,9 @@ export default function Home() {
                     {({ active }) => (
                       <button
                         type="button"
-                        className={`${active && "bg-blue-200"
-                          } group w-full flex items-center rounded-md py-2 text-sm pl-4`}
+                        className={`${
+                          active && "bg-blue-200"
+                        } group w-full flex items-center rounded-md py-2 text-sm pl-4`}
                         onClick={() => {
                           setTextDocType(arr.document);
                           setDocumentType(arr.docType);
@@ -285,9 +290,18 @@ export default function Home() {
       {/* Face Capture */}
       <section>
         <h1 className="text-3xl text-center pb-8 font-bold">Face ID</h1>
-        <Dropdown text="Service Level" data={captureLevel} action={(level) => setFace(level)} />
+        <Dropdown
+          text="Service Level"
+          data={captureLevel}
+          action={(level) => setFace(level)}
+        />
         <div className="flex flex-wrap mb-6">
-          <ButtonAction text="Face ID" action={() => face ? faceCapture() : alert("Fill the Service Level")} />
+          <ButtonAction
+            text="Face ID"
+            action={() =>
+              face ? faceCapture() : alert("Fill the Service Level")
+            }
+          />
           <ButtonAction text="Check Result Face ID" action={faceResult} />
         </div>
       </section>
@@ -295,9 +309,22 @@ export default function Home() {
       {/* ID Recognition */}
       <section>
         <h1 className="text-3xl text-center pb-8 font-bold">ID Recognition</h1>
-        <Dropdown text="Service Level" data={recognitionLevel} action={(level) => setRecognition(level)} />
+        <Dropdown
+          text="Service Level"
+          data={recognitionLevel}
+          action={(level) => setRecognition(level)}
+        />
         <div className="flex flex-wrap gap-6 mb-6">
-          <ButtonAction text="ID Recognition" action={() => documentType ? recognition ? idInit() : alert("Fill the Service Level") : alert("Fill the Document Type")} />
+          <ButtonAction
+            text="ID Recognition"
+            action={() =>
+              documentType
+                ? recognition
+                  ? idInit()
+                  : alert("Fill the Service Level")
+                : alert("Fill the Document Type")
+            }
+          />
           <ButtonAction text="Check Result ID Recognition" action={idResult} />
         </div>
       </section>
@@ -305,10 +332,29 @@ export default function Home() {
       {/* Real ID */}
       <section>
         <h1 className="text-3xl text-center pb-8 font-bold">eKYC</h1>
-        <Dropdown text="Service Level" data={realIdLevel} action={(level) => setReal(level)} />
-        <Dropdown text="Operation" data={operationMode} action={(level) => setOperation(level)} />
+        <Dropdown
+          text="Service Level"
+          data={realIdLevel}
+          action={(level) => setReal(level)}
+        />
+        <Dropdown
+          text="Operation"
+          data={operationMode}
+          action={(level) => setOperation(level)}
+        />
         <div className="flex flex-wrap gap-6 mb-6">
-          <ButtonAction text="eKYC" action={() => documentType ? real ? operation ? realId() : alert("Fill the Operation") : alert("Fill the Service Level") : alert("Fill the Document Type")} />
+          <ButtonAction
+            text="eKYC"
+            action={() =>
+              documentType
+                ? real
+                  ? operation
+                    ? realId()
+                    : alert("Fill the Operation")
+                  : alert("Fill the Service Level")
+                : alert("Fill the Document Type")
+            }
+          />
           <ButtonAction text="Check Result eKYC" action={realIdResult} />
         </div>
       </section>
@@ -335,26 +381,26 @@ export default function Home() {
         </div>
         {content.length != 0
           ? content.map((arr, idx) => (
-            <div key={idx}>
-              <p>
-                {arr[0].toString()} :{" "}
-                {typeof arr[1] === "object" ? (
-                  <table>
-                    <tbody>
-                      {generateData(arr[1]).map((data, id) => (
-                        <tr className="font-normal" key={id}>
-                          <td className="pr-6">{data[0]}</td>
-                          <td>{data[1]}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                ) : (
-                  arr[1].toString()
-                )}
-              </p>
-            </div>
-          ))
+              <div key={idx}>
+                <p>
+                  {arr[0].toString()} :{" "}
+                  {typeof arr[1] === "object" ? (
+                    <table>
+                      <tbody>
+                        {generateData(arr[1]).map((data, id) => (
+                          <tr className="font-normal" key={id}>
+                            <td className="pr-6">{data[0]}</td>
+                            <td>{data[1]}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    arr[1].toString()
+                  )}
+                </p>
+              </div>
+            ))
           : ""}
       </article>
       <div className="py-40" />

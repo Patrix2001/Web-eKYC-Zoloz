@@ -1,5 +1,6 @@
 import docTypes from "./docTypes";
 import captureLevel from "./captureLevel";
+import h5ModeConfig from "./h5ModeConfig";
 import recognitionLevel from "./recognitionLevel";
 import { realIdLevel, operationMode } from "./realId";
 
@@ -26,6 +27,7 @@ export {
   ID_RECOGNITION_RESULT,
   captureLevel,
   docTypes,
+  h5ModeConfig,
   recognitionLevel,
   realIdLevel,
   operationMode
