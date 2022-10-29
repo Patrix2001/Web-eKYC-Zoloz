@@ -1,54 +1,18 @@
-import {
-  BASE_URL,
-  ID_RECOGNITION_OCR,
-  ID_RECOGNITION_INIT,
-  ID_RECOGNITION_RESULT,
-  h5ModeConfig
-} from "../libraries";
+import { BASE_URL, FACECAPTURE_INIT, FACECAPTURE_RESULT, h5ModeConfig } from "../constants";
 import createHeader from "./createHeader";
 
+// https://docs.zoloz.com/zoloz/saas/apireference/facecapture-initialize
 
-const IdRecoginize = () => {
-  const scan = async (docType, frontPageImage, backPageImage) => {
+const FaceCapture = () => {
+  const init = async (metaInfo, serviceLevel) => {
     try {
-      const url = ID_RECOGNITION_OCR;
-      const id = new Date().getTime();
-
-      const content = {
-        bizId: `bizid_${id}`,
-        docType: docType,
-        frontPageImage: frontPageImage,
-      };
-
-      if (backPageImage) {
-        content["backPageImage"] = backPageImage;
-      }
-
-      const response = await fetch(BASE_URL + url, {
-        method: "POST",
-        body: JSON.stringify(content),
-        headers: createHeader(url, content),
-      });
-
-      const data = await response.json();
-      if (data.result.resultStatus === "S") {
-        return data;
-      }
-      return { message: data.result.message, code: data.result.resultCode };
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const init = async (metaInfo, docType, serviceLevel) => {
-    try {
-      const url = ID_RECOGNITION_INIT;
+      const url = FACECAPTURE_INIT;
       const id = new Date().getTime();
 
       const content = {
         bizId: `bizid_${id}`,
         metaInfo: metaInfo,
         userId: `userid_${id}`,
-        docType: docType,
         serviceLevel: serviceLevel,
       };
 
@@ -75,7 +39,7 @@ const IdRecoginize = () => {
 
   const result = async (transactionId) => {
     try {
-      const url = ID_RECOGNITION_RESULT;
+      const url = FACECAPTURE_RESULT;
       const id = new Date().getTime();
 
       const content = {
@@ -100,10 +64,9 @@ const IdRecoginize = () => {
   };
 
   return {
-    scan,
     init,
     result,
   };
 };
 
-export default IdRecoginize;
+export default FaceCapture;

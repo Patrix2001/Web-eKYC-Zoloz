@@ -1,4 +1,4 @@
-import { IdRecoginize } from "../../../utils";
+import { IdRecoginize } from "../../../helpers";
 
 export default async function handler(req, res) {
   const { state } = req.body;

@@ -8,7 +8,7 @@ import {
   recognitionLevel,
   realIdLevel,
   operationMode,
-} from "../libraries";
+} from "../constants";
 import ButtonAction from "../components/ButtonAction";
 import Dropdown from "../components/Dropdown";
 

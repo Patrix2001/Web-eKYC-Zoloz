@@ -1,4 +1,4 @@
-import { RealId } from "../../../utils";
+import { RealId } from "../../../helpers";
 
 export default async function handler(req, res) {
   const { metaInfo, docType, serviceLevel, operationMode } = req.body;

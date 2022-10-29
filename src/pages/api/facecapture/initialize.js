@@ -1,4 +1,4 @@
-import { FaceCapture } from "../../../utils";
+import { FaceCapture } from "../../../helpers";
 
 export default async function handler(req, res) {
   const { metaInfo, serviceLevel } = req.body;

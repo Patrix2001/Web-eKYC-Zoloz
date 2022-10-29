@@ -1,15 +1,47 @@
 import {
   BASE_URL,
-  REAL_ID_INIT,
-  REAL_ID_RESULT,
-  h5ModeConfig,
-} from "../libraries";
+  ID_RECOGNITION_OCR,
+  ID_RECOGNITION_INIT,
+  ID_RECOGNITION_RESULT,
+  h5ModeConfig
+} from "../constants";
 import createHeader from "./createHeader";
 
-const RealId = () => {
-  const init = async (metaInfo, docType, serviceLevel, operationMode) => {
+
+const IdRecoginize = () => {
+  const scan = async (docType, frontPageImage, backPageImage) => {
     try {
-      const url = REAL_ID_INIT;
+      const url = ID_RECOGNITION_OCR;
+      const id = new Date().getTime();
+
+      const content = {
+        bizId: `bizid_${id}`,
+        docType: docType,
+        frontPageImage: frontPageImage,
+      };
+
+      if (backPageImage) {
+        content["backPageImage"] = backPageImage;
+      }
+
+      const response = await fetch(BASE_URL + url, {
+        method: "POST",
+        body: JSON.stringify(content),
+        headers: createHeader(url, content),
+      });
+
+      const data = await response.json();
+      if (data.result.resultStatus === "S") {
+        return data;
+      }
+      return { message: data.result.message, code: data.result.resultCode };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const init = async (metaInfo, docType, serviceLevel) => {
+    try {
+      const url = ID_RECOGNITION_INIT;
       const id = new Date().getTime();
 
       const content = {
@@ -18,15 +50,11 @@ const RealId = () => {
         userId: `userid_${id}`,
         docType: docType,
         serviceLevel: serviceLevel,
-        operationMode: operationMode,
       };
 
       if (metaInfo === "MOB_H5") {
         //must add configuration mode H5
         content["h5ModeConfig"] = h5ModeConfig;
-        content["flowType"] = "H5_REALIDLITE_KYC";
-      } else {
-        content["flowType"] = "REALIDLITE_KYC";
       }
 
       const response = await fetch(BASE_URL + url, {
@@ -47,13 +75,12 @@ const RealId = () => {
 
   const result = async (transactionId) => {
     try {
-      const url = REAL_ID_RESULT;
+      const url = ID_RECOGNITION_RESULT;
       const id = new Date().getTime();
 
       const content = {
         bizId: `bizid_${id}`,
         transactionId: transactionId,
-        isReturnImage: "Y",
       };
 
       const response = await fetch(BASE_URL + url, {
@@ -73,9 +100,10 @@ const RealId = () => {
   };
 
   return {
+    scan,
     init,
     result,
   };
 };
 
-export default RealId;
+export default IdRecoginize;
