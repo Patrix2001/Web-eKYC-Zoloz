@@ -80,6 +80,12 @@ export default function Home() {
               }
             }
           }
+        } else if (propName === "extRiskInfo") {
+          for (let info in data[propName]) {
+            if (data[propName].hasOwnProperty(info)) {
+              result.push([info, data[propName][info]]);
+            }
+          }
         }
       }
     }

@@ -1,5 +1,11 @@
-import { BASE_URL, FACECAPTURE_INIT, FACECAPTURE_RESULT, h5ModeConfig } from "../constants";
+import {
+  BASE_URL,
+  FACECAPTURE_INIT,
+  FACECAPTURE_RESULT,
+  h5ModeConfig,
+} from "../constants";
 import createHeader from "./createHeader";
+import ConnectAuth from "./connectAuth";
 
 // https://docs.zoloz.com/zoloz/saas/apireference/facecapture-initialize
 
@@ -54,6 +60,10 @@ const FaceCapture = () => {
       });
 
       const data = await response.json();
+
+      //Upload Image
+      await ConnectAuth().enroll(data["extInfo"]["imageContent"]);
+
       if (data.result.resultStatus === "S") {
         return data;
       }

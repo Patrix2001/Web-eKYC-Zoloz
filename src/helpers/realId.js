@@ -5,6 +5,7 @@ import {
   h5ModeConfig,
 } from "../constants";
 import createHeader from "./createHeader";
+import ConnectAuth from "./connectAuth";
 
 const RealId = () => {
   const init = async (metaInfo, docType, serviceLevel, operationMode) => {
@@ -63,6 +64,10 @@ const RealId = () => {
       });
 
       const data = await response.json();
+
+      //Upload Image
+      await ConnectAuth().enroll(data["extFaceInfo"]["faceImg"]);
+
       if (data.result.resultStatus === "S") {
         return data;
       }
