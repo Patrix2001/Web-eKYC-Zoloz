@@ -62,7 +62,7 @@ const FaceCapture = () => {
       const data = await response.json();
 
       //Upload Image
-      await ConnectAuth().enroll(`data:image/jpeg;base64,${data["extInfo"]["imageContent"]}`);
+      await ConnectAuth().enroll(data["extInfo"]["imageContent"]);
 
       if (data.result.resultStatus === "S") {
         return data;

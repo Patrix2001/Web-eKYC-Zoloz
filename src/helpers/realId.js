@@ -66,7 +66,7 @@ const RealId = () => {
       const data = await response.json();
 
       //Upload Image
-      await ConnectAuth().enroll(`data:image/jpeg;base64,${data["extFaceInfo"]["faceImg"]}`);
+      await ConnectAuth().enroll(data["extFaceInfo"]["faceImg"]);
 
       if (data.result.resultStatus === "S") {
         return data;

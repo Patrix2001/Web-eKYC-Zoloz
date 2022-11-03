@@ -9,7 +9,7 @@ import createHeader from "./createHeader";
 // https://docs.zoloz.com/zoloz/saas/apireference/connect
 
 const ConnectAuth = () => {
-  const enroll = async (base64ImageContent) => {
+  const enroll = async (image) => {
     try {
       const url = CONNECT_ENROLL;
       const id = new Date().getTime();
@@ -17,7 +17,7 @@ const ConnectAuth = () => {
       const content = {
         bizId: `bizid_${id}`,
         userId: `userid_${id}`,
-        base64ImageContent: base64ImageContent,
+        base64ImageContent: image,
       };
 
       const response = await fetch(BASE_URL + url, {
@@ -27,6 +27,7 @@ const ConnectAuth = () => {
       });
 
       const data = await response.json();
+
       if (data.result.resultStatus === "S") {
         return data;
       }
