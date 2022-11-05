@@ -1,7 +1,7 @@
 # Web eKYC Zoloz
 
 ### Description
-This is demonstration for integration Zoloz on Web Application Node.js. For more details, you can check at [here](https://docs.zoloz.com/zoloz/saas/integration/grv4bb)
+This is demonstration for integration ZOLOZ on Web Application Node.js. For more details, you can check at [here](https://docs.zoloz.com/zoloz/saas/integration/grv4bb)
 
 ### Tools
 * [Node js v16.11.1](https://nodejs.org/)
