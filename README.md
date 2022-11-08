@@ -43,3 +43,20 @@ info  - Loaded env from E:\Semester\7\zoloz\WebZoloz\.env.local
 ```
 
 Access *http://localhost* on your web browser
+
+### Development Screen's
+
+#### Home Screen
+
+<div>
+<img align=top src="/screens/home.jpg" alt="home" width="400"/>
+<img align=top src="/screens/selection.jpg" alt="features" width="400"/>
+</div>
+
+#### Face ID
+
+<img align=top src="/screens/websdk_zoloz.jpg" alt="face id" width="400"/>
+
+#### Result
+
+<img src="/screens/face_result.jpg" alt="result" width="400"/>
