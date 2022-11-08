@@ -10,7 +10,7 @@ const REAL_ID_INIT = "/api/v1/zoloz/realid/initialize";
 const REAL_ID_RESULT = "/api/v1/zoloz/realid/checkresult";
 
 const FACECAPTURE_INIT = "/api/v1/zoloz/facecapture/initialize";
-const FACECAPTURE_RESULT = "/api/v1a/zoloz/facecapture/checkresult";
+const FACECAPTURE_RESULT = "/api/v1/zoloz/facecapture/checkresult";
 
 const ID_RECOGNITION_OCR = "/api/v1/zoloz/idrecognition/recognize";
 const ID_RECOGNITION_INIT = "/api/v1/zoloz/idrecognition/initialize";
